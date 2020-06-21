@@ -1,0 +1,9 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# 设置指定配置文件生效
+spring:
+  profiles:
+    active: dev

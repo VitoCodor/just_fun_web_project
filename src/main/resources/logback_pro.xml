@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <property name="PROJECT" value="funweb"/>
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <!--<property name="ROOT" value="/Users/vito/logs/logback/${PROJECT}/"/>-->
+    <property name="ROOT" value="/www/servers/logs/logback/${PROJECT}/"/>
+    <!--日志文件备份目录-->
+    <property name="BACKUP" value="${ROOT}/backup/%d/"/>
+    <!--日志文件(未压缩前的)最大的大小-->
+    <property name="FILESIZE" value="50MB"/>
+    <!--日志文件保留天数-->
+    <property name="MAXHISTORY" value="30"/>
+    <!--日期格式-->
+    <timestamp key="DATETIME" datePattern="yyyy-MM-dd HH:mm:ss"/>
+
+
+    <!-- old_INFO 输入到文件，按日期和文件大小 -->
+    <!--<appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<encoder charset="utf-8">-->
+            <!--<pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} - %m%n-->
+            <!--</pattern>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>INFO</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>${ROOT}%d/info.%i.log</fileNamePattern>-->
+            <!--<maxHistory>${MAXHISTORY}</maxHistory>-->
+            <!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+                <!--<maxFileSize>${FILESIZE}</maxFileSize>-->
+            <!--</timeBasedFileNamingAndTriggeringPolicy>-->
+        <!--</rollingPolicy>-->
+    <!--</appender>-->
+
+    <!-- 控制台打印 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="utf-8">
+            <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} -- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ERROR 输入到文件，按日期和文件大小 -->
+    <!-- RollingFileAppender 按照每天生成日志文件 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${ROOT}/log_error.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${BACKUP}/log_error_%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <!-- 单个文件不能超过这个大小, 超过30MB, 就会滚动生成新的日志文件-->
+            <maxFileSize>${FILESIZE}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 日志格式化输出 -->
+            <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} -- %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!-- WARN 输入到文件，按日期和文件大小 -->
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${ROOT}/log_warn.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${BACKUP}/log_warn_%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <!-- 单个文件不能超过这个大小, 超过30MB, 就会滚动生成新的日志文件-->
+            <maxFileSize>${FILESIZE}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 日志格式化输出 -->
+            <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} -- %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- INFO 输入到文件，按日期和文件大小 -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${ROOT}/log_info.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${BACKUP}/log_info_%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <!-- 单个文件不能超过这个大小, 超过30MB, 就会滚动生成新的日志文件-->
+            <maxFileSize>${FILESIZE}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 日志格式化输出 -->
+            <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} -- %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- DEBUG 输入到文件，按日期和文件大小 -->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${ROOT}/log_debug.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${BACKUP}/log_debug_%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <!-- 单个文件不能超过这个大小, 超过30MB, 就会滚动生成新的日志文件-->
+            <maxFileSize>${FILESIZE}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 日志格式化输出 -->
+            <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} -- %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- TRACE 输入到文件，按日期和文件大小 -->
+    <appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${ROOT}/log_trace.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${BACKUP}/log_trace_%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!--日志文件保留天数-->
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <!--日志文件最大的大小-->
+            <maxFileSize>${FILESIZE}</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 日志格式化输出 -->
+            <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} -- %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- SQL相关日志输出-->
+    <logger name="org.apache.ibatis" level="INFO" additivity="false"/>
+    <logger name="org.mybatis.spring" level="INFO" additivity="false"/>
+    <logger name="com.github.miemiedev.mybatis.paginator" level="INFO" additivity="false"/>
+
+    <!-- Logger 根目录 -->
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="TRACE"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+    </root>
+</configuration>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径, 线上日志路径 : /www/server/tomcat/logs/logback , 本地路径 : D:/logback-->
+    <property name="LOG_PATH" value="/www/server/tomcat/logs/logback"/>
+    <!--<property name="LOG_PATH" value="/usr/local/tomcat/logs/logback"/>-->
+    <!--<property name="LOG_PATH" value="D:/logback"/>-->
+    <!--<property name="LOG_PATH" value="/Volumes/myfile/workfile/mollybox/logback"/>-->
+
+    <appender name="DEBUGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${LOG_PATH}/log_debug.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${LOG_PATH}/backup/log-debug-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>30</maxHistory>
+            <!-- 单个文件不能超过这个大小, 超过30MB, 就会滚动生成新的日志文件-->
+            <maxFileSize>30MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 日志格式化输出 -->
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%thread] [%file:%line] %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+
+    <appender name="INFOFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${LOG_PATH}/log_info.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${LOG_PATH}/backup/log-info-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>30</maxHistory>
+            <!-- 单个文件不能超过这个大小, 超过30MB, 就会滚动生成新的日志文件-->
+            <maxFileSize>30MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 日志格式化输出 -->
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%thread] [%file:%line] %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- 此日志文件只记录error级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <appender name="ERRORFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志路径与日志名称从logback.properties文件中取 -->
+        <file>${LOG_PATH}/log_error.log</file>
+        <!-- 按时间和文件大小归档 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档文件名格式 -->
+            <fileNamePattern>${LOG_PATH}/backup/log-error-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 保留30个归档文件 这里是指保留30天的日志不删除, 超过30天的日志会被清除, 至于为什么是按天数来, 主要是文件格式决定的%d{yyyy-MM-dd}-->
+            <maxHistory>30</maxHistory>
+            <!-- 单个文件不能超过这个大小, 超过30MB, 就会滚动生成新的日志文件-->
+            <maxFileSize>30MB</maxFileSize>
+        </rollingPolicy>
+        <!-- 追加方式记录日志 -->
+        <append>true</append>
+        <!-- 日志文件的格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%thread] [%file:%line] %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- 此日志文件只记录error级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+
+    <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!--encoder 默认配置为PatternLayoutEncoder-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] [%file:%line] %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>
+
+
+
+
+
+    <root level="info">
+        <appender-ref ref="DEBUGFILE"/>
+        <appender-ref ref="INFOFILE"/>
+        <appender-ref ref="ERRORFILE"/>
+
+
+        <!-- 生产环境将请stdout,testfile去掉 -->
+        <appender-ref ref="stdout"/>
+    </root>
+
+</configuration>
