@@ -1,9 +1,7 @@
 spring:
-  http:
-    encoding:
-      charset: UTF-8
   mvc:
-    date-format: yyyy-MM-dd
+    format:
+      date: yyyy-MM-dd
   jackson:
     date-format: yyyy-MM-dd hh:mm:ss
     time-zone: GMT+8
@@ -13,3 +11,7 @@ spring:
 
 logging:
   config: classpath:logback_pro.xml
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
