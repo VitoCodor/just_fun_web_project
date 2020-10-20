@@ -15,3 +15,8 @@ server:
   servlet:
     encoding:
       charset: UTF-8
+
+appconfig:
+  username: vito
+  password: vito123
+  email: laiwenbin_gd@163.com
