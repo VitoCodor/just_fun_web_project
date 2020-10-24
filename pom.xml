@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.vitoboy</groupId>
     <artifactId>funweb</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2.1-SNAPSHOT</version>
     <name>funweb</name>
     <description>this is a project for Spring Boot, and it just use some technology</description>
 
