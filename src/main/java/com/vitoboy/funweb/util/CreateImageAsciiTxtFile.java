@@ -38,6 +38,11 @@ public class CreateImageAsciiTxtFile {
             "W", "A", "a", "e", "s", "t", "x",
             "=","+", "1", "?", "!", ";", ":", "-", "·", " "};
 
+    /**
+     * 可选像素与字符替换列表
+     *
+     * 1024节日专用
+     */
     private static final String[] programmingChars
             = new String[]{"4","4","2","2","0","0","x","x","=","="
             ,"+","+","1","1","?","!","!", ";",";", ":", ":", "-", "·","·", " "};
