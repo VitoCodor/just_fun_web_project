@@ -38,6 +38,10 @@ public class CreateImageAsciiTxtFile {
             "W", "A", "a", "e", "s", "t", "x",
             "=","+", "1", "?", "!", ";", ":", "-", "·", " "};
 
+    private static final String[] programmingChars
+            = new String[]{"4","4","2","2","0","0","x","x","=","="
+            ,"+","+","1","1","?","!","!", ";",";", ":", ":", "-", "·","·", " "};
+
     /**
      * 宽度像素的计算增量, 经过测试发现, 默认值为2更好(360*360的图片下)
      */
@@ -148,7 +152,11 @@ public class CreateImageAsciiTxtFile {
      */
     public static void main(String[] args) throws Exception {
 
-        turnImageToAsciiFile("/Users/vito/Pictures/namae.jpeg", null, true, -4);
+//        turnImageToAsciiFile("/Users/vito/Pictures/namae.jpeg", null, true, -4);
+        turnImageToAsciiFile("/Users/vito/Pictures/20201024.jpeg",
+                new String[]{"4","4","2","2","0","0","x","x","=","="
+                ,"+","+","1","1","?","!","!", ";",";", ":", ":", "-", "·","·", " "},
+                true, -3);
     }
 
 }
